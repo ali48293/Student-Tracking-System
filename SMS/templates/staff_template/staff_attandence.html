@@ -1,0 +1,126 @@
+{% extends 'staff_template/staff_home.html' %}
+
+{% load static %}
+
+{% block heading %}
+  
+<div class="col-md-9">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Take Attandance</h3>
+        </div>
+    </div>
+</div>
+
+{% endblock heading %}
+{% block content %}
+
+
+
+<!-- form start -->
+<div class="card-body">
+   
+    <div class="form-group">
+        <label>Subject</label>
+        <select class="form-control" name="subject" id="subject" >
+            
+            {% for subject in subjects  %}
+            <option value="{{subject.id}}">{{subject.subject_name}}</option>
+            
+            {% endfor %}
+            
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Session Year</label>
+        <select class="form-control" name="session_year" id="session_year">
+            
+            {% for session_year in sessions  %}
+            <option value="{{session_year.id}}">{{session_year.session_start_year}} TO {{session_year.session_end_year}} </option>
+                    
+            {% endfor %}
+            
+        </select>
+    </div>
+    
+    
+    
+    <div class="form-group">
+        {% if messages %}              
+        <div class="col-12" >
+            {% for message in messages %}
+            
+            {% if message.tags == 'error' %}
+            
+            <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+            {% endif %}
+            {% if message.tags == 'success' %}
+            
+            <div class="alert alert-success" style="margin-top: 10px;">{{message}}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        {% endif %}
+    </div>
+    <!-- /.card-body -->
+    
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary btn-lg" id="fetch_student"  >Fetch Student</button>
+    </div>
+<div id="student_data">
+
+
+</div>    
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script >
+    let btn = document.getElementById("fetch_student");
+    btn.addEventListener("click",(e) => {
+       
+       
+    let subject = document.getElementById("subject").value;
+    let session_year = document.getElementById("session_year").value;
+   
+    
+  
+   
+        $.ajax({
+
+            url:"{% url 'get_students' %}",
+            type:'POST',
+            data: {subject:subject,session_year:session_year}
+        })
+        .done(function(response){
+
+            console.log(response)
+            var json_data = JSON.parse(response)
+            var div_data = "<div class='form-group'> <div class='row'>";
+            for (key in json_data)
+            {
+                div_data += "<div class='col-lg-4'> <div class='form-check'> <input type='checkbox' checked='checked' name='student_data[]'  value='"+json_data[key]['id']+"'> <label class='form-check-label'  ></label>"+json_data[key]['name']+"</div></div>";
+
+            }
+            div_data += "</div></div>"
+            div_data += "<div class='form-group'>";
+            div_data += "<button id='save_attendance' class='btn btn-success' type='button' >Save Attandance</button>";
+            div_data += "</div>";
+         document.getElementById("student_data").innerHTML=div_data;
+        
+        })
+        .fail(function(){
+            alert("Error in Fetching")
+        })
+        let save_btn = document.getElementById("save_attendance");
+        save_btn.addEventListener("click",(e) => {
+            console.log("SAVE BUTTON HAS BEEN CLUCKED")
+        }) 
+
+    }) 
+    
+    
+</script>
+{% endblock script %}

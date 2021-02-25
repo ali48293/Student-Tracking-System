@@ -1,0 +1,94 @@
+{% extends 'staff_template/staff_home.html' %}
+
+{% load static %}
+
+{% block heading %}
+  
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Send Feedback</h3>
+        </div>
+    </div>
+</div>
+
+{% endblock heading %}
+{% block content %}
+
+
+
+<!-- form start -->
+<form action="{% url 'staff_feedback_save' %}" method="POST">
+<div class="card-body">
+   
+        {% csrf_token %}
+        
+    <div class="form-group">
+        <label>Feedback </label>
+        <textarea name='feedback' class=" form-control" rows='6'></textarea>
+    </div>
+    
+    
+    
+    <div class="form-group">
+        {% if messages %}              
+        <div class="col-12" >
+            {% for message in messages %}
+            
+            {% if message.tags == 'error' %}
+            
+            <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+            {% endif %}
+            {% if message.tags == 'success' %}
+            
+            <div class="alert alert-success" style="margin-top: 10px;">{{message}}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        {% endif %}
+    </div>
+    <!-- /.card-body -->
+    
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary btn-lg" >send Feedback</button>
+    </div>
+
+    </form>
+    
+    {% if leave_reports %}
+        
+    
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Feedback History</h3>
+            </div>
+        </div>
+    </div>
+    <div class="table">
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Feedback</th>
+            <th>Feedback Reply</th> 
+        </tr>
+        
+        {% for leave_report in leave_reports  %}
+            <tr>
+                <td>
+                    {{leave_report.staff_id.id}}
+                </td>
+                <td>
+                    {{leave_report.feedback}}
+                </td>
+
+                
+            
+            </tr>
+        {% endfor %}
+            
+    </table>
+</div>
+    {% endif %}
+    {% endblock content %}

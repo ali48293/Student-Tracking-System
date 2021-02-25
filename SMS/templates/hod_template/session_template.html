@@ -1,0 +1,64 @@
+{% extends 'hod_template/base.html' %}
+
+
+
+  
+  {% block heading %}
+  
+  <div class="col-md-9">
+  <div class="card card-primary">
+      <div class="card-header">
+          <h3 class="card-title">Add Session</h3>
+      </div>
+  </div>
+</div>
+
+  {% endblock heading %}
+{% block content %}
+  
+
+  
+    <!-- form start -->
+      <form role="form" method="POST" action="/add_session_save">
+        {% csrf_token %}
+      
+        <div class="card-body">
+          <div class="form-group">
+            <label>Session Start Year</label>
+            <input type="date" name="session_start" class="form-control" placeholder="Session Start Year">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Session End Year</label>
+            <input type="date" name="session_end" class="form-control" placeholder="Session End Year">
+          </div>
+          </div>
+          
+        <div class="form-group">
+        {% if messages %}              
+        <div class="col-12" >
+          {% for message in messages %}
+          
+          {% if message.tags == 'error' %}
+             
+          <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+          {% endif %}
+          {% if message.tags == 'success' %}
+             
+          <div class="alert alert-success" style="margin-top: 10px;">{{message}}</div>
+          {% endif %}
+          {% endfor %}
+        </div>
+          
+        {% endif %}
+    </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-lg">Add Session</button>
+        </div>
+        
+      </form>
+    </div>
+    {% endblock content %}

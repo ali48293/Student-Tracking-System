@@ -1,0 +1,77 @@
+{% extends 'staff_template/staff_home.html' %}
+
+{% block HomePage %}
+    <div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+      <div class="container-fluid page__container">
+          <div class="card card-form ">
+              <div class="row no-gutters">
+                  <div class="col-lg-4 card-body ">
+                      <p><strong class="headings-color m-4">Basic Information</strong></p>
+                      <p class="text-muted m-3">Edit your account details and settings.</p>
+                  </div>
+                
+                  <div class=" col-lg-6 card-form__body card-body">
+                      <div class="row mb-lg-3 mb-md-3 mb-3">
+                          <div class="col-lg-6 col-md-6 col-12">
+                              <div class="row mb-lg-3 mb-md-3 mb-3">
+                                  <div class="col-lg-12 col-md-12 card-header text-bold">
+                                      <div class="form-text">
+                
+                                        <h6 class="headings-color">
+                                           
+                                            User ID : {{user.id}}
+                                          </h6>
+                                      </div>
+
+                                    </div>
+
+                                    
+                                </div>
+
+                            </div>
+                      </div>
+                      <div class="container">
+                      <span class=" font-weight-bolder">First Name</span>   :  <span class="m-3">{{staff.admin.first_name}}</span>  <br> 
+                      <span class=" font-weight-bolder">Last Name</span>    :  <span class="m-3">{{staff.admin.last_name}}</span>  <br> 
+                      <span class=" font-weight-bolder">User Name</span>    :  <span class="m-3">{{staff.admin.username}}</span>  <br> 
+                      <span class=" font-weight-bolder">Email</span>        :  <span class="m-3">{{staff.admin.email}}</span>  <br> 
+                      <span class=" font-weight-bolder">Address</span>        :  <span class="m-3">{{staff.address}}</span>  <br> 
+                      <span class=" font-weight-bolder">Date Joined</span>        :  <span class="m-3">{{staff.created_at|date}}</span>  <br> 
+                      {% if Subjects %}
+                      <span class=" font-weight-bolder">Subjects Assigned</span>   :  
+                      <br>
+                      
+                          
+                      
+                          
+                      {% for Subject in Subjects  %}
+                          
+                      
+                      <span  >
+                          <ul>
+                              <li>{{Subject.subject_name}}</li>
+                          </ul>
+                          </span>  
+                          
+                          {% endfor %}
+
+                           
+                          {% endif %}  
+                    </div>
+                    <div class="container p-3">
+                    <button class="btn">
+                                            <a href="/logout_user" class="btn btn-danger radiolist" >
+                                            Logout
+                                           <i  class=" col-2 fas fa-unlock-alt"></i>  
+                                           
+                                          </a>
+                       </button>                                
+                       <a href="/update_staff/{{staff.admin.id}}" class="btn btn-success">Edit</a>                                 
+     </div>
+      </div>
+     </div>
+     </div>
+
+                      
+                      </div>
+{% endblock HomePage %}

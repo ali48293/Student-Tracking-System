@@ -1,0 +1,278 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>
+  {% block title %}
+ Admin | Dashboard
+  {% endblock title %}
+    </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/logout_user" class="nav-link">
+          Logout
+           <i  class=" col-2 fas fa-unlock-alt"></i>  
+        
+        
+        </a>
+       
+      </li>
+   
+    </ul>
+    
+  </nav>
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Right navbar links -->
+    <h3 class=" m-lg-3">   Admin Panel | Hello: {{user.username|upper}}</h3>
+  
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/HOD" class="brand-link">
+      <img src="https://img.icons8.com/ios-filled/50/000000/student-center.png" alt="Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Student Tracking </span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'dist/img/avatar.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        {% if user.is_authenticated %}
+        <div class="info">
+
+          <a href="#" class="d-block">{{user.username|upper}}</a>
+ 
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+          {% url 'add_staff' as add_staff %}
+            <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add Staff
+                <span class="right badge badge-primary">New</span>
+              </p>
+            </a>  
+       
+                      </li>
+
+          <li class="nav-item">
+            {% url 'manage_staff' as manage_staff %}
+            <a href="{{ manage_staff }}" class="nav-link {% if request.path == manage_staff %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Manage Staff
+                <span class="right badge badge-success">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_student' as add_student %}
+            <a href="{{ add_student }}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add Student
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_student' as manage_student %}
+            <a href="{% url 'manage_student' %}" class="nav-link {% if request.path == manage_student %} active {% endif %} ">
+              <i class="nav-icon fas fa-edit"></i>
+
+              <p>
+                Manage Student
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+         
+          <li class="nav-item">
+            {% url 'add_course' as add_course %}
+            <a href="{{ add_course }}" class="nav-link {% if request.path == add_course %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add Course
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_course' as manage_course %}
+            <a href="{{ manage_course }}" class="nav-link {% if request.path == manage_course %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+
+              <p>
+                Manage Course
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_subject' as add_subject %}
+            <a href="{{ add_subject }}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add Subject
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+         
+          <li class="nav-item">
+            {% url 'manage_subjects' as manage_subjects %}
+            <a href="{{ manage_subjects }}" class="nav-link {% if request.path == manage_subjects %} active {% endif %}">
+              <i class="nav-icon fas fa-edit"></i>
+
+              <p>
+                Manage Subject
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+         
+         
+          <li class="nav-item">
+            {% url 'manage_session' as manage_session %}
+            <a href="{% url 'manage_session' %}" class="nav-link {% if request.path == manage_session %} active {% endif %}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Add Session Year
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+         
+         
+         
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                View Attandance
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Student Feedback
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Staff Feedback
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+               Student Leave
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+               Staff Leave
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+              
+            <h1 class="m-0 text-dark">
+            {% block heading %}
+              
+            {% endblock heading %}
+              </h1>
+          </div><!-- /.col -->
+          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+      {% block HomePage %}
+  
+      {% endblock HomePage %}
+
+{% block content %}
+      
+    {% endblock content %}
+      
