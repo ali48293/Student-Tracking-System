@@ -1,4 +1,4 @@
-
+import django_heroku
 from pathlib import Path,os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '629d7a_!e^vl14k60*br@1bmlc074n1i4@39_0383-j+26d+$v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  ['StudentManagement.herokuapp.com', 'localhost', '127.0.0.1']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
@@ -111,9 +111,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = "SMS.CustomUser"
 AUTHENTICATION_BACKENDS = ["SMS.EmailBackend.EmailBackEnd"]
 EMAIL_BACKENDS = ['SMS.EmailBackend.EmailBackEnd']
 EMAIL_FILE_PATH = os.path.join(BASE_DIR,"sent_mails")
+
+django_heroku.settings(locals())
