@@ -1,1 +1,1 @@
-web: gunicorn SMS.wsgi
+web: gunicorn StudentManagement.wsgi
