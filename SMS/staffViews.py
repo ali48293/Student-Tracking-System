@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
 import json
 from django.contrib import messages
-from .models import LeaveReportStaffs,Staffs,FeedbackStaff,CustomUser
+from .models import LeaveReportStaffs,Staffs,FeedbackStaff,CustomUser,Courses,Attendance,AttendanceReport
 def staff_home_view(request):
     return render(request,"staff_template/staff_home.html")
 def staff_home_view(request):
@@ -68,6 +68,32 @@ def get_students(request):
         eachStudent = {"id":student.admin.id,'name':student.admin.first_name + ' '+ student.admin.last_name }
         list_data.append(eachStudent)
     return JsonResponse(json.dumps(list_data),content_type='applicaiton/json',safe=False)
+
+@csrf_exempt
+def save_attandence_data(request):
+    student_ids = request.POST.get("student_ids")
+    attandance_date = request.POST.get("attandance_date")
+    subject_id = request.POST.get("subject_id")
+    session_year_id = request.POST.get("session_year_id")
+    print(student_ids)
+
+    subject_model = Subjects.objects.get(id=subject_id)
+    session_model = SessionYearModel.objects.get(id=session_year_id)
+    json_student = json.loads(student_ids)
+    print(json_student)
+    # try:
+    attandance = Attendance(subject_id=subject_model,session_year_id=session_model,attendace_date=attandance_date)
+    attandance.save()
+    for stud in json_student:
+        student = Students.objects.get(admin=stud['id'])
+        attendance_report = AttendanceReport(student_id=student,attendance_id=attandance,status=stud['status'])
+        attendance_report.save() 
+    return HttpResponse("ok")
+    # except:
+    #     return HttpResponse("Error")
+        
+        
+
 
 def staff_apply_leave(request):
     staff_obj = Staffs.objects.get(admin=request.user.id)

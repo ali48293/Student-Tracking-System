@@ -59,6 +59,7 @@ urlpatterns = [
     path('update_staff/<str:staff_id>', staffViews.update_staff_view,name = "update_staff"),
     path('update_staff_save', staffViews.update_staff_save_view,name = "update_staff_save"),
     path('staff_attandence', staffViews.staff_attandence,name = "staff_attandence"),
+    path('save_attandence_data', staffViews.save_attandence_data,name = "save_attandence_data"),
     path('get_students', staffViews.get_students,name = "get_students"),
     path('staff_apply_leave', staffViews.staff_apply_leave,name = "staff_apply_leave"),
     path('staff_apply_leave_save', staffViews.staff_apply_leave_save,name = "staff_apply_leave_save"),

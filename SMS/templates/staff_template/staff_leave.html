@@ -72,18 +72,15 @@
     <div class="table">
     <table class="table">
         <tr>
-            <th>ID</th>
             <th>Leave Date</th>
             <th>Leave Reason</th>
             <th>Leave Status</th>
-            <th>Action</th>
+            
         </tr>
         
         {% for leave_report in leave_reports  %}
             <tr>
-                <td>
-                    {{leave_report.staff_id.id}}
-                </td>
+
                 <td>
                     {{leave_report.leave_date}}
                 </td>
@@ -105,9 +102,7 @@
                     {% endif %}
                     
                 </td>
-                <td>
-                    {{leave_report.id}}
-                </td>
+
             </tr>
         {% endfor %}
             

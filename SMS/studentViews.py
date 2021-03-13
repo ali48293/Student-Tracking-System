@@ -2,10 +2,16 @@ from django.shortcuts import render
 from .models import Students,LeaveReportStudent,FeedbackStudent
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import messages
-
+from .models import Students
 def student_home_view(request):
     
     return render(request,"student_template/student_home.html")
+def student_home_view(request):
+    
+    return render(request,"student_template/homepage.html")
+# def student_update_view(request):
+#     student = Students.objects.get(admin=request.usr.)
+    return render(request,"student_template/homepage.html")
 
 def student_apply_leave(request):
     staff_obj = Students.objects.get(admin=request.user.id)

@@ -41,7 +41,7 @@
             {% endfor %}
             
         </select>
-    </div>
+</div>
     
     
     
@@ -71,7 +71,8 @@
 <div id="student_data">
 
 
-</div>    
+</div>
+<div class=" text-danger" id="after_save"></div>    
 </div>
 {% endblock content %}
 
@@ -98,7 +99,7 @@
 
             console.log(response)
             var json_data = JSON.parse(response)
-            var div_data = "<div class='form-group'> <div class='row'>";
+            var div_data = "<div class='form-group'><label>Attandance Date</label><input type='date' name='attendance_date' id='attendance_date' class='form-control'></div><div class='form-group'><div class='row'>";
             for (key in json_data)
             {
                 div_data += "<div class='col-lg-4'> <div class='form-check'> <input type='checkbox' checked='checked' name='student_data[]'  value='"+json_data[key]['id']+"'> <label class='form-check-label'  ></label>"+json_data[key]['name']+"</div></div>";
@@ -114,10 +115,62 @@
         .fail(function(){
             alert("Error in Fetching")
         })
-        let save_btn = document.getElementById("save_attendance");
-        save_btn.addEventListener("click",(e) => {
-            console.log("SAVE BUTTON HAS BEEN CLUCKED")
-        }) 
+        $(document).on("click","#save_attendance",function(){
+
+                $(this).attr("disabled","disabled")
+                $(this).text("Saving Attendance....")
+              
+   /* 
+   #! For Disabling the button for 5 seconds
+                
+
+                fewSeconds=5
+                var btn = $(this);
+                btn.prop('disabled', true);
+                setTimeout(function(){
+                    btn.prop('disabled', false);
+                }, fewSeconds*1000);
+     */
+                var student_data = $("input[name='student_data[]']").map(function(){ 
+                if ($(this).is(":checked")){
+                return {"id": $(this).val(),"status":1};
+            }
+            else{
+                return {"id": $(this).val(),"status":0};
+
+            }
+            }).get()
+            
+            var Attandance_date = $("#attendance_date").val();
+            var subject_id = $("#subject").val();
+            var session_year_id = $("#session_year").val();
+            student_data = JSON.stringify(student_data)
+
+            $.ajax({
+
+                url:"{% url 'save_attandence_data' %}",
+                type:'POST',
+                data: {student_ids:student_data,attandance_date:Attandance_date,subject_id:subject_id,session_year_id:session_year_id}
+            })
+            .done(function(response){
+               /* if (response == 'ok')
+                {
+                    document.getElementById("after_save").innerHTML="<h3>Reload the Page To Re-Enter the Data</h1>"
+                }
+                else
+                {
+                    alert("Error While Saving")
+                }
+                */
+                location.reload()
+                console.log(response)
+            })
+            .fail(function(){
+                alert("Error in Fetching")
+            })
+
+        })
+        
 
     }) 
     
